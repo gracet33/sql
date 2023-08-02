@@ -1,0 +1,75 @@
+The database consist of two tables.
+The table named teacher consist of Primary Key (PK) id as well as Foreign Keys dept. name, phone, mobile.
+The second table named dept consist of Primary Key (PK) id and Foreign Key name (This is the name of the department). 
+
+Question 1. List the teachers who have NULL for their department.
+SQL Code: 
+SELECT name
+  FROM teacher
+  WHERE dept IS NULL;
+
+Question 2. List teachers with no department and the departments with no teacher.
+SQL Code: 
+SELECT teacher.name, dept.name
+ FROM teacher INNER JOIN dept
+           ON (teacher.dept=dept.id);
+
+Question 3. List all the teachers but not the departments with no teachers.
+SQL Code: 
+SELECT teacher.name, dept.name
+ FROM teacher LEFT JOIN dept
+           ON (teacher.dept=dept.id)
+
+Question 4. List all the departments but not the teachers with no department.
+SQL Code: 
+SELECT teacher.name, dept.name
+ FROM teacher RIGHT JOIN dept
+           ON (teacher.dept=dept.id)
+
+Question 5. Use the number '07986 444 2266' if there is no number given. Show teacher name and mobile number or '07986 444 2266'
+SQL Code: 
+SELECT name, COALESCE(mobile,  '07986 444 2266') as mobile
+  FROM teacher;
+
+Question 6. Print the teacher name and department name. Use the string 'None' where there is no department.
+SQL Code: 
+SELECT t.name as teacher, COALESCE(d.name, 'None') as department
+  FROM teacher t
+  LEFT JOIN dept d ON (t.dept = d.id);
+
+Question 7. Show the number of teachers and the number of mobile phones.
+SQL Code: 
+SELECT count(name) as num_of_teacher, count(mobile) as num_of_mobile
+  FROM teacher;
+
+Question 8. Show each department and the number of staff. Ensure that the Engineering department is listed.
+SQL Code:
+SELECT d.name, COUNT(t.name)
+  FROM teacher t
+  RIGHT JOIN dept d ON (t.dept = d.id)
+  GROUP BY d.name;
+
+Question 9. Show the name of each teacher followed by 'Sci' if the teacher is in dept 1 or 2 and 'Art' otherwise.
+SQL Code: 
+SELECT name, 
+  CASE 
+    WHEN dept IN (1, 2) THEN 'Sci'
+    ELSE 'Art'
+  END as teacher
+FROM teacher;
+
+Question 10. Show the name of each teacher followed by 'Sci' if the teacher is in dept 1 or 2, 
+show 'Art' if the teacher's dept is 3 and 'None' otherwise.
+SQL Code:
+SELECT name, 
+  CASE 
+    WHEN dept IN (1, 2) THEN 'Sci' 
+    WHEN dept = 3 THEN 'Art'
+    ELSE 'None'
+  END as teacher
+FROM teacher;
+
+
+
+
+
