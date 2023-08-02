@@ -1,0 +1,72 @@
+The database: 
+  stops(id, name)
+  route(num, company, pos, stop)
+
+
+Question 1. How many stops are in the database?
+SQL Code:
+SELECT COUNT(*) as num_of_stops
+  FROM stops;
+
+Question 2. Find the id value for the stop 'Craiglockhart'
+SQL Code: 
+SELECT id 
+  FROM stops
+WHERE name = 'Craiglockhart';
+
+Question 3. Give the id and the name for the stops on the '4' 'LRT' service.
+SQL Code: 
+SELECT s.id, s.name
+  FROM stops s
+  JOIN route r ON r.stop = s.id
+  WHERE r.company = 'LRT' AND r.num = '4';
+
+Question 4. 
+For the routes that visit either London Road (149) or Craiglockhart (53), 
+restrict the output to the routes that have a count of 2 stops.
+SQL Code:
+SELECT company, num, COUNT(*)
+  FROM route WHERE stop=149 OR stop=53
+  GROUP BY company, num
+  HAVING COUNT(*) = 2;
+
+Question 5. Find the services from Craiglockhart to London Road without changing routes.
+SQL Code:
+SELECT a.company, a.num, a.stop, b.stop
+  FROM route a JOIN route b ON
+    (a.company=b.company AND a.num=b.num)
+    WHERE a.stop= (SELECT id FROM stops WHERE name = 'Craiglockhart') 
+    AND b.stop = (SELECT id FROM stops WHERE name = 'London Road');
+
+Question 6. Join the stops and routes to find the services from Craiglockhart to London Road without changing routes.
+SQL Code: 
+SELECT a.company, a.num, stopa.name, stopb.name
+FROM route a JOIN route b ON
+  (a.company=b.company AND a.num=b.num)
+  JOIN stops stopa ON (a.stop=stopa.id)
+  JOIN stops stopb ON (b.stop=stopb.id)
+WHERE stopa.name='Craiglockhart' and stopb.name = 'London Road
+
+Question 7. Give a list of all the services which connect stops 115 and 137 ('Haymarket' and 'Leith')
+SQL Code: 
+SELECT DISTINCT a.company, a.num
+FROM route a JOIN route b 
+  ON (a.company=b.company AND a.num=b.num)
+  JOIN stops stopa ON (a.stop=stopa.id)
+  JOIN stops stopb ON (b.stop=stopb.id)
+WHERE stopa.name='Haymarket' and stopb.name = 'Leith'
+
+Question 8. 
+Give a distinct list of the stops which may be reached from 'Craiglockhart' by taking one bus, 
+including 'Craiglockhart' itself, offered by the LRT company. Include the company and bus no. of the relevant services.
+SQL Code: 
+SELECT DISTINCT stopa.name, a.company, a.num
+FROM route a JOIN route b
+  ON (a.company=b.company AND a.num=b.num)
+  JOIN stops stopa ON (a.stop=stopa.id)
+  JOIN stops stopb ON (b.stop=stopb.id)
+WHERE stopa.name='Craiglockhart' OR stopb.name = 'Craiglockhart'
+
+
+
+
