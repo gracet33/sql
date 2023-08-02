@@ -1,7 +1,8 @@
 The database consists of three tables movie , actor and casting.
-The movie table has the primary key (PK) of id, title, and yr and foreign key (FK)  of director, budget, gross.
+The movie table has the primary key (PK) of id and foreign key (FK)  of title, yr, director, budget, gross.
 The actor table has PK of id and FK of name.
-The casting table consist of movieid, actorid, and ord, which all serve as both PK and FK. 
+The casting table is a junction table, allowing us to link movie table and actor table. 
+The casting table consist of movieid, actorid, and ord, which all serve as both PK and FK . 
 
 Question 1.
 List the films where the yr is 1962 [Show id, title]
