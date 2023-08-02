@@ -6,4 +6,6 @@ as well as the SQL code for extracting accurate information from one table with 
 functions, such as COUNT() and SUM(), join functions, and nested select methods. 
 By checking this file, you can get an understanding of how I link tables and code in SQL. 
 
-2. Designing a SQL Database
+2. The query_null file showcase usage of NULL, JOIN, INNER JOIN, LEFT JOIN, RIGHT JOIN, CASE WHEN ELSE END, as well as aggregating functions like COUNT() and SUM()
+
+3. 
